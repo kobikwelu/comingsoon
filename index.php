@@ -150,68 +150,77 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 					<h2 class="modal-title" id="modal-subscribe-label">Stay Tuned</h2>
 				</div>
-                <!--end modal-header-->
 				<div class="modal-body">
-				    <div class="alert alert-danger display-error " style="display: none">
-    </div>
-	 <div class="alert alert-success display-success " style="display: none">
-    </div>
-	
+				    <div class="alert alert-danger display-error" style="display:none;"></div>
+					<div class="alert alert-success display-success" style="display: none;color:#fff;"></div>
 					<p>
 						Be the first to know fresh news, updates and new releases! Just add your e-mail address and well
 						let you know.
 					</p>
 				</div>
-                <!--end modal-body-->
 				<div class="modal-footer" >
 					<form class="form"  role="form" id="contactForm" >
 						<div class="form-group">
 							<label for="subscribe-email">Email address</label>
 							<input type="email" class="form-control" name="email" id="email" placeholder="Email Address" required="">
+							<span id="error_msg"></span>
 						</div>
-						<button type="submit" id="submit" class="btn btn-primary">Submit</button>
+						<button type="button" id="submit12" class="btn btn-primary">Submit</button>
 					</form>
 				</div>
-                <!--modal-footer-->
 			</div>
-            <!--modal-content-->
 		</div>
-        <!--modal-dialog-->
 	</div>
 	<!--end modal-->
  <script type="text/javascript">
-  $(document).ready(function() {
-      $('#submit').click(function(e){
-        e.preventDefault();
-        var email = $("#email").val();
-        $.ajax({
-            type: "POST",
-            url: "https://pintel-api-node.herokuapp.com/api/v1/notifyMe",
-            dataType: "json",
-            data: { email:email},
-            success : function(data){
-                console.log(data)
-                if (data.message == "Success"){
-                   $(".display-success").html("<p style={color:'green'} >"+'Success'+"</p>");
-                    $(".display-success").css("display","block");
-                    $("#email").val('');
-
-                } else {
-                    $(".display-error").html("<ul>"+data.msg+"</ul>");
-                    $(".display-error").css("display","block");
-                    $("#email").val('');
-
-                }
-
-                
-            }
-        });
-
-
-      });
-  });
+    $(document).ready(function(){
+	  $("#error_msg").html('');
+      $('#submit12').click(function(e){ 
+			e.preventDefault();
+			var email = $("#email").val();
+			if(email==''){
+			    $("#error_msg").html('<span style="color:red;">This field is required!</span>');
+			    return false;
+			}else{
+				$("#error_msg").html('');
+			}
+			$.ajax({
+				type: "POST",
+				url: "https://pintel-api-node.herokuapp.com/api/v1/notifyMe",
+				dataType: "json",
+				data: {email:email},
+				success : function(data){
+					$("#email").val('');
+					$(".display-error").hide();
+					$(".display-success").show();
+					$(".display-success").html(data.message);
+					
+					var timeleft = 10;
+					var downloadTimer = setInterval(function(){
+					timeleft--;
+					if(timeleft == 0)
+					    $(".display-success").hide();
+					},1000);
+				},
+				error: function (request, status, error) {
+					var geterrormsg = JSON.parse(request.responseText);
+					$(".display-success").hide();
+					$(".display-error").show();
+					$(".display-error").html(geterrormsg.description);
+					$("#email").val('');
+					console.clear();
+					
+					var timeleft = 10;
+					var downloadTimer = setInterval(function(){
+					timeleft--;
+					if(timeleft == 0)
+						$(".display-error").hide();
+					},1000);
+				}
+			});
+		});	
+    });
 </script>
-
 <style>
 body .alert-success.display-success{background:#009933;}
 body .alert-success.display-success	p{color:#fff;}
