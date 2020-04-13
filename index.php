@@ -154,7 +154,7 @@
 				    <div class="alert alert-danger display-error" style="display:none;"></div>
 					<div class="alert alert-success display-success" style="display: none;color:#fff;"></div>
 					<p>
-						Be the first to know fresh news, updates and new releases! Just add your e-mail address and well
+						Be the first to know fresh news, updates and new releases! Just add your e-mail address and we will
 						let you know.
 					</p>
 				</div>
