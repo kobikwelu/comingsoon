@@ -188,7 +188,7 @@
 			    $("#error_msg").html('<span style="color:red;">This field is required!</span>');
 			    return false;
 			}else if(!valid(email)){
-				$("#error_msg").html('<span style="color:red;">This si not a Valid email</span>');
+				$("#error_msg").html('<span style="color:red;">This is not a valid email</span>');
 				 return false;
 			}
 			else {
