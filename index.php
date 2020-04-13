@@ -95,7 +95,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="image">
                                    
-                                    <h4>Code Visualizatioon</h4>
+                                    <h4>Code Visualization</h4>
                                     <p>Learn and understand the flow of the codebase through an interactive visualization tool to identify dependencies faster.</p>
                                 </div>
                                 <!--end image-->
@@ -154,7 +154,7 @@
 				    <div class="alert alert-danger display-error" style="display:none;"></div>
 					<div class="alert alert-success display-success" style="display: none;color:#fff;"></div>
 					<p>
-						Be the first to know fresh news, updates and new releases! Just add your e-mail address and we will
+						Be the first to know fresh news, updates and new releases! Just add your e-mail address and well
 						let you know.
 					</p>
 				</div>
@@ -173,6 +173,12 @@
 	</div>
 	<!--end modal-->
  <script type="text/javascript">
+ 
+ function valid(email)
+{
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    return emailReg.test(email); //this will either return true or false based on validation
+}
     $(document).ready(function(){
 	  $("#error_msg").html('');
       $('#submit12').click(function(e){ 
@@ -181,9 +187,13 @@
 			if(email==''){
 			    $("#error_msg").html('<span style="color:red;">This field is required!</span>');
 			    return false;
-			}else{
-				$("#error_msg").html('');
+			}else if(!valid(email)){
+				$("#error_msg").html('<span style="color:red;">This si not a Valid email</span>');
+				 return false;
 			}
+			else {
+				$("#error_msg").html('');
+				
 			$.ajax({
 				type: "POST",
 				url: "https://pintel-api-node.herokuapp.com/api/v1/notifyMe",
@@ -217,7 +227,7 @@
 						$(".display-error").hide();
 					},1000);
 				}
-			});
+			});}
 		});	
     });
 </script>
