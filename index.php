@@ -210,7 +210,12 @@
 
       });
   });
-</script
+</script>
+
+<style>
+body .alert-success.display-success{background:#009933;}
+body .alert-success.display-success	p{color:#fff;}
+</style>
 	<script src="./assets/jquery-2.1.1.js"></script>
 	<script type="text/javascript" src="./assets/bootstrap.min.js"></script>
     <script type="text/javascript" src="./assets/js"></script>
